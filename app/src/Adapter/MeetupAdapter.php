@@ -3,7 +3,7 @@
  * Nottingham Digital events
  *
  * @link      https://github.com/pavlakis/notts-digital
- * @copyright Copyright (c) 2016 Antonios Pavlakis
+ * @copyright Copyright (c) 2017 Antonios Pavlakis
  * @license   https://github.com/pavlakis/notts-digital/blob/master/LICENSE (BSD 3-Clause License)
  */
 namespace NottsDigital\Adapter;
@@ -98,6 +98,7 @@ class MeetupAdapter implements AdapterInterface
 
     /**
      * @param $group
+     * @throws \Exception
      */
     protected function loadEventInfo($group)
     {
@@ -129,6 +130,7 @@ class MeetupAdapter implements AdapterInterface
 
         } catch (\Exception $e) {
             $this->eventEntityCollection->add(new NullEventEntity());
+            throw $e;
         }
 
     }

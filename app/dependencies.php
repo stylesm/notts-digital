@@ -3,11 +3,20 @@
  * Nottingham Digital events
  *
  * @link      https://github.com/pavlakis/notts-digital
- * @copyright Copyright (c) 2016 Antonios Pavlakis
+ * @copyright Copyright (c) 2017 Antonios Pavlakis
  * @license   https://github.com/pavlakis/notts-digital/blob/master/LICENSE (BSD 3-Clause License)
  */
 
 $container = new Pimple\Container();
+
+$container['logger'] = function($c){
+    
+    $logger = new Monolog\Logger('events_logger');
+    $logger->pushHandler(new Monolog\Handler\StreamHandler(dirname(__DIR__).'/var/log/event.log', Monolog\Logger::ERROR));
+
+    return $logger;
+};
+
 
 $container['config'] = function($c){
     return json_decode(file_get_contents(__DIR__.'/configs/config.json'), true);
@@ -36,7 +45,8 @@ $container['adapter.meetups'] = function($c){
         $c['config']['meetups']['baseUrl'],
         $c['config']['meetups']['uris'],
         $c['groups']['meetups'],
-        new \NottsDigital\Event\EventEntityCollection()
+        new \NottsDigital\Event\EventEntityCollection(),
+        $c['logger']
     );
 };
 

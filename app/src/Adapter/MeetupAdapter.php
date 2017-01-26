@@ -8,13 +8,14 @@
  */
 namespace NottsDigital\Adapter;
 
-use GuzzleHttp\Client;
-use NottsDigital\Adapter\AdapterInterface;
-use NottsDigital\Event\EventEntity;
-use NottsDigital\Event\EventEntityCollection;
-use NottsDigital\Event\GroupInfo;
-use NottsDigital\Event\NullEventEntity;
-use NottsDigital\Event\NullGroupInfo;
+use GuzzleHttp\Client,
+    Psr\Log\LoggerInterface,
+    NottsDigital\Event\GroupInfo,
+    NottsDigital\Event\EventEntity,
+    NottsDigital\Event\NullGroupInfo,
+    NottsDigital\Event\NullEventEntity,
+    NottsDigital\Adapter\AdapterInterface,
+    NottsDigital\Event\EventEntityCollection;
 
 /**
  * Class MeetupAdapter
@@ -62,6 +63,8 @@ class MeetupAdapter implements AdapterInterface
      */
     protected $groupInfo;
 
+    protected $logger;
+
     /**
      * MeetupAdapter constructor.
      * @param Client $client
@@ -70,8 +73,9 @@ class MeetupAdapter implements AdapterInterface
      * @param $uris
      * @param $config
      * @param EventEntityCollection $eventEntityCollection
+     * @param LoggerInterface $logger
      */
-    public function __construct(Client $client, $apiKey, $baseUrl, $uris, $config, EventEntityCollection $eventEntityCollection)
+    public function __construct(Client $client, $apiKey, $baseUrl, $uris, $config, EventEntityCollection $eventEntityCollection, LoggerInterface $logger)
     {
         $this->client = $client;
         $this->apiKey = $apiKey;
@@ -79,6 +83,7 @@ class MeetupAdapter implements AdapterInterface
         $this->uris = $uris;
         $this->config = $config;
         $this->eventEntityCollection = $eventEntityCollection;
+        $this->logger = $logger;
     }
 
     /**
@@ -130,7 +135,7 @@ class MeetupAdapter implements AdapterInterface
 
         } catch (\Exception $e) {
             $this->eventEntityCollection->add(new NullEventEntity());
-            throw $e;
+            $this->logger->error($e->getMessage());
         }
 
     }

@@ -8,7 +8,6 @@
  */
 namespace NottsDigital\Adapter;
 
-
 use NottsDigital\Event\EventEntityCollection,
     NottsDigital\Http\Request\MeetupRequest,
     NottsDigital\Event\NullEventEntity,
@@ -57,8 +56,7 @@ class MeetupAdapter implements AdapterInterface
         array $config,
         MeetupRequest $meetupRequest,
         EventEntityCollection $eventEntityCollection
-    )
-    {
+    ) {
         $this->config = $config;
         $this->meetupRequest = $meetupRequest;
         $this->eventEntityCollection = $eventEntityCollection;
@@ -88,7 +86,6 @@ class MeetupAdapter implements AdapterInterface
         $groupUrlName = $this->config[$group]['group_urlname'];
 
         try {
-
             $events = $this->meetupRequest->fetchEventInfo($groupUrlName);
             
             if (!isset($events['results']) || empty($events['results'])) {
@@ -102,18 +99,15 @@ class MeetupAdapter implements AdapterInterface
                     new EventEntity($this->getByNameStringMatch($events['results'], $this->config[$group]['match']['name']))
                 );
             } else {
-
                 $this->eventEntityCollection->add(new EventEntity($events['results'][0], $this->groupConfig));
 
                 if (isset($events['results'][1])) {
                     $this->eventEntityCollection->add(new EventEntity($events['results'][1], $this->groupConfig));
                 }
             }
-
         } catch (\Exception $e) {
             $this->eventEntityCollection->add(new NullEventEntity());
         }
-
     }
 
     /**
@@ -124,16 +118,13 @@ class MeetupAdapter implements AdapterInterface
         $groupUrlName = $this->config[$group]['group_urlname'];
 
         try {
-
             $groupInfo = $this->meetupRequest->fetchGroupInfo($groupUrlName);
 
             if (!empty($groupInfo)) {
-
                 $this->groupInfo = new GroupInfo($groupInfo['name'], $groupInfo['description'], $groupInfo['group_photo']['highres_link']);
             } else {
                 $this->groupInfo = new NullGroupInfo();
             }
-
         } catch (\Exception $e) {
             $this->groupInfo = new NullGroupInfo();
         }
@@ -158,12 +149,12 @@ class MeetupAdapter implements AdapterInterface
 
     /**
     *@param $name
-    *@return string 
+    *@return string
     *
     */
     protected function normaliseName($name)
     {
-        $name = preg_replace('/\s*/', '',strtolower($name));
+        $name = preg_replace('/\s*/', '', strtolower($name));
         return $name;
     }
 

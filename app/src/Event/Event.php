@@ -59,7 +59,6 @@ class Event implements EventInterface
             if ($key === 1) {
                 $eventInfo['next_event'] = $eventEntity->toArray();
             }
-
         }
 
         return $eventInfo;

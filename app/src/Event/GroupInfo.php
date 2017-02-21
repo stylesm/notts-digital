@@ -8,7 +8,6 @@
  */
 namespace NottsDigital\Event;
 
-
 final class GroupInfo implements GroupInterface
 {
     /**

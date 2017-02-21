@@ -55,7 +55,7 @@ class TitoAdapter implements AdapterInterface
         $this->group    = $group;
 
         try {
-            $crawler = $this->client->request('GET', $this->baseUrl . '/' . $this->config[$group]['url'] );
+            $crawler = $this->client->request('GET', $this->baseUrl . '/' . $this->config[$group]['url']);
             $this->event = $crawler->filter('.events .future > a')->eq(0);
         } catch (\InvalidArgumentException $e) {
             $this->event = new Crawler();
@@ -78,7 +78,8 @@ class TitoAdapter implements AdapterInterface
         $dateStr = '';
         try {
             $dateStr = $this->event->text();
-        } catch (\InvalidArgumentException $e) {}
+        } catch (\InvalidArgumentException $e) {
+        }
 
         preg_match("/(\w+)(\s{1})(\d{1,2})([a-zA-z]{2}),\s{1}(\d{4})/", $dateStr, $date);
 
@@ -97,7 +98,8 @@ class TitoAdapter implements AdapterInterface
         $url = '';
         try {
             $url = $this->getBaseUrl() . $this->event->attr('href');
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         return $url;
     }

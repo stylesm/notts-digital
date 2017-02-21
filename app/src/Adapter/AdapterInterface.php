@@ -8,7 +8,6 @@
  */
 namespace NottsDigital\Adapter;
 
-
 interface AdapterInterface
 {
     /**

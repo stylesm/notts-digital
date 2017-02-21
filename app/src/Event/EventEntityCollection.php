@@ -8,7 +8,6 @@
  */
 namespace NottsDigital\Event;
 
-
 final class EventEntityCollection implements \ArrayAccess, \Iterator
 {
     /**
@@ -128,7 +127,7 @@ final class EventEntityCollection implements \ArrayAccess, \Iterator
     public function valid()
     {
         $key = key($this->container);
-        $var = ($key !== NULL && $key !== FALSE);
+        $var = ($key !== null && $key !== false);
 
         return $var;
     }

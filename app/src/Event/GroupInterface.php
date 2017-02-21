@@ -9,7 +9,6 @@
 
 namespace NottsDigital\Event;
 
-
 interface GroupInterface
 {
     /**

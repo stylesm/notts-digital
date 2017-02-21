@@ -8,7 +8,6 @@
  */
 namespace NottsDigital\Event;
 
-
 interface EventEntityInterface
 {
     /**
